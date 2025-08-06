@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>Ana Sayfa</title>
+</head>
+<body>
+<h1>Hoşgeldiniz!</h1>
+<p>Bu, basit bir test sayfasıdır.</p>
+
+<form th:action="@{/admin/add-employee}" method="get">
+    <button type="submit">Yeni Çalışan Ekle</button>
+</form>
+
+<form th:action="@{/logout}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <button type="submit">Çıkış Yap</button>
+</form>
+</body>
+</html>

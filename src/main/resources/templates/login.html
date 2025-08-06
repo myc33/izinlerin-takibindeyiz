@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Giriş Yap</title>
+</head>
+<body>
+<h1>Giriş Yap</h1>
+<form th:action="@{/login}" method="post">
+    <label>Kullanıcı Adı:</label>
+    <input type="text" name="username" required/><br/>
+
+    <label>Şifre:</label>
+    <input type="password" name="password" required/><br/>
+
+    <button type="submit">Giriş Yap</button>
+</form>
+
+<div th:if="${param.logout}">
+    <p style="color: green;">Başarıyla çıkış yaptınız.</p>
+</div>
+
+</body>
+</html>

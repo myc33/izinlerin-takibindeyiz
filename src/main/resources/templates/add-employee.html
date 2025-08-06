@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Yeni Çalışan Ekle</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Yeni Çalışan Ekle</h1>
+
+<form th:action="@{/admin/add-employee}" method="post">
+    <label>Ad:</label>
+    <input type="text" name="ad" required/><br/><br/>
+
+    <label>Soyad:</label>
+    <input type="text" name="soyad" required/><br/><br/>
+
+    <label>Başlama Tarihi:</label>
+    <input type="date" name="baslamaTarihi" required/><br/><br/>
+
+    <label>Cep Telefonu:</label>
+    <input type="text" name="telefon" required/><br/><br/>
+
+    <label>Şifre:</label>
+    <input type="password" name="password" required/><br/><br/>
+
+    <button type="submit">Çalışanı Ekle</button>
+</form>
+
+<p><a th:href="@{/}">Ana Sayfa</a></p>
+</body>
+</html>

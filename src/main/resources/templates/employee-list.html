@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+ <html xmlns:th="http://www.thymeleaf.org">
+ <head>
+     <meta charset="UTF-8" />
+     <title>Çalışan Listesi</title>
+ </head>
+ <body>
+ <h1>Çalışan Listesi</h1>
+
+ <table border="1" cellpadding="5" cellspacing="0">
+     <thead>
+         <tr>
+             <th>ID</th>
+             <th>Ad</th>
+             <th>Soyad</th>
+             <th>Başlama Tarihi</th>
+             <th>Telefon</th>
+         </tr>
+     </thead>
+     <tbody>
+         <tr th:each="employee : ${employees}">
+             <td th:text="${employee.id}"></td>
+             <td th:text="${employee.ad}"></td>
+             <td th:text="${employee.soyad}"></td>
+             <td th:text="${employee.baslamaTarihi}"></td>
+             <td th:text="${employee.telefon != null ? employee.telefon : '-'}"></td>
+         </tr>
+     </tbody>
+ </table>
+
+ </body>
+ </html>
