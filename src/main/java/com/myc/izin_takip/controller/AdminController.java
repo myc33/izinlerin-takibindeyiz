@@ -1,14 +1,18 @@
 package com.myc.izin_takip.controller;
 
 import com.myc.izin_takip.model.Employee;
+import com.myc.izin_takip.model.LeaveRequest;
 import com.myc.izin_takip.repository.EmployeeRepository;
+import com.myc.izin_takip.repository.LeaveRequestRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Controller
@@ -69,5 +73,40 @@ public class AdminController {
         model.addAttribute("employees", employees);
         return "employee-list";
     }
+
+    @PostMapping("/delete-employee")
+    public String deleteEmployee(@RequestParam Long id) {
+        employeeRepository.deleteById(id);
+        return "redirect:/admin/employees";
+    }
+
+    @GetMapping("/edit-employee/{id}")
+    public String showEditEmployeeForm(@PathVariable Long id, Model model) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Geçersiz çalışan Id:" + id));
+        List<Employee> managers = employeeRepository.findAll();
+        model.addAttribute("employee", employee);
+        model.addAttribute("managers", managers);
+        return "edit-employee";
+    }
+
+    @PostMapping("/edit-employee")
+    public String updateEmployee(@RequestParam Long id,
+                                 @RequestParam String unvan,
+                                 @RequestParam(required = false) Long managerId) {
+
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Geçersiz çalışan Id:" + id));
+        employee.setUnvan(unvan);
+
+        if (managerId != null) {
+            Employee manager = employeeRepository.findById(managerId).orElse(null);
+            employee.setManager(manager);
+        } else {
+            employee.setManager(null);
+        }
+
+        employeeRepository.save(employee);
+        return "redirect:/admin/employees";
+    }
+
 
 }

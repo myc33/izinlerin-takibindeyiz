@@ -18,7 +18,7 @@ public class Employee {
     private String password;
     private String role;
     private String username;
-    private int remainingLeave;
+    private double remainingLeave;
     private String unvan;
     @ManyToOne(fetch = FetchType.LAZY, optional = true)  // optional = true ile nullable yapıyoruz
     @JoinColumn(name = "manager_id", nullable = true)
@@ -59,11 +59,11 @@ public class Employee {
 
     public void setUsername(String username) { this.username = username; }
 
-    public Integer getRemainingLeave() {
+    public double getRemainingLeave() {
         return remainingLeave;
     }
 
-    public void setRemainingLeave(Integer remainingLeave) {
+    public void setRemainingLeave(double remainingLeave) {
         this.remainingLeave = remainingLeave;
     }
 

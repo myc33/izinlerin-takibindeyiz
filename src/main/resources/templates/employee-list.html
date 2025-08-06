@@ -18,6 +18,7 @@
              <th>Ünvan</th>
              <th>Kalan İzin</th>
              <th>Yönetici</th>
+             <th>İşlemler</th>
      </thead>
      <tbody>
          <tr th:each="employee : ${employees}">
@@ -29,6 +30,15 @@
              <td th:text="${employee.unvan}"></td>
              <td th:text="${employee.remainingLeave}">0</td>
              <td th:text="${employee.manager != null ? employee.manager.ad + ' ' + employee.manager.soyad : '-'}"></td>
+             <td>
+                 <a th:href="@{/admin/edit-employee/{id}(id=${employee.id})}">
+                     <button type="button">Düzenle</button>
+                 </a>
+                 <form th:action="@{/admin/delete-employee}" method="post" onsubmit="return confirm('Bu çalışanı silmek istediğinizden emin misiniz?');">
+                     <input type="hidden" th:name="id" th:value="${employee.id}" />
+                     <button type="submit">Sil</button>
+                 </form>
+             </td>
          </tr>
      </tbody>
  </table>
