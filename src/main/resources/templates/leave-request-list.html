@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>İzin Talepleri Listesi</title>
+</head>
+<body>
+<h1>İzin Taleplerim</h1>
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>İzin Tipi</th>
+    <th>Başlangıç</th>
+    <th>Bitiş</th>
+    <th>Talep Edilen Gün</th>
+    <th>Durum</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="leave : ${leaveRequests}">
+    <td th:text="${leave.id}"></td>
+    <td th:text="${leave.leaveType}"></td>
+    <td th:text="${#dates.format(leave.startDate, 'dd.MM.yyyy HH:mm')}"></td>
+    <td th:text="${#dates.format(leave.endDate, 'dd.MM.yyyy HH:mm')}"></td>
+    <td th:text="${leave.daysRequested}"></td>
+    <td th:text="${leave.status}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<a href="/leave-request"><button>Yeni İzin Talebi Gir</button></a>
+
+</body>
+</html>

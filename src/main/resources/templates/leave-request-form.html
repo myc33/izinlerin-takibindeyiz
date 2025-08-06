@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>İzin Talebi Oluştur</title>
+</head>
+<body>
+<h1>İzin Talebi Oluştur</h1>
+
+<form th:action="@{/leave-request}" method="post" th:object="${leaveRequest}">
+    Başlangıç Tarihi ve Saati:
+    <input type="datetime-local" th:field="*{startDate}" required />
+
+    Bitiş Tarihi ve Saati:
+    <input type="datetime-local" th:field="*{endDate}" required />
+
+    Kaç gün izin istediğiniz (örn: 1.5):
+    <input type="number" step="0.1" min="0" th:field="*{daysRequested}" required />
+
+    İzin Tipi:
+    <select th:field="*{leaveType}">
+        <option th:each="type : ${leaveTypes}" th:value="${type}" th:text="${type}"></option>
+    </select>
+
+    <button type="submit" onclick="return confirm('İzin talebinizi göndermek istediğinize emin misiniz?');">Gönder</button>
+</form>
+
+</body>
+</html>

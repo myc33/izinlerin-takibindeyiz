@@ -20,7 +20,6 @@ public class LeaveRequestController {
     private final LeaveRequestRepository leaveRequestRepository;
     private final EmployeeRepository employeeRepository;
 
-    // Constructor injection
     public LeaveRequestController(LeaveRequestRepository leaveRequestRepository,
                                   EmployeeRepository employeeRepository) {
         this.leaveRequestRepository = leaveRequestRepository;
@@ -34,16 +33,12 @@ public class LeaveRequestController {
                 .orElseThrow(() -> new IllegalArgumentException("Kullanıcı bulunamadı"));
 
         leaveRequest.setEmployee(employee);
-
-        long days = ChronoUnit.DAYS.between(leaveRequest.getStartDate(), leaveRequest.getEndDate()) + 1;
-        leaveRequest.setDaysRequested(days);
-
         leaveRequest.setStatus("PENDING");
+        leaveRequestRepository.save(leaveRequest);
 
-        leaveRequestRepository.save(leaveRequest);  // Burada hata olmaz
-
-        return "redirect:/leave-request-success";
+        return "redirect:/leave-requests"; // Başarılı sonrası liste sayfasına yönlendir
     }
+
 
     @GetMapping("/leave-request")
     public String showLeaveRequestForm(Model model) {
@@ -72,4 +67,17 @@ public class LeaveRequestController {
     public String leaveRequestSuccess() {
         return "leave-request-success";
     }
+
+    @GetMapping("/leave-requests")
+    public String listLeaveRequests(Model model, Principal principal) {
+        String username = principal.getName();
+        Employee employee = employeeRepository.findByTelefon(username)
+                .orElseThrow(() -> new IllegalArgumentException("Kullanıcı bulunamadı"));
+
+        List<LeaveRequest> leaveRequests = leaveRequestRepository.findByEmployee(employee);
+
+        model.addAttribute("leaveRequests", leaveRequests);
+        return "leave-request-list";  // Thymeleaf template adı
+    }
+
 }

@@ -16,6 +16,11 @@
     <button type="button">İzin Talebi Gir</button>
 </a>
 
+<a href="/leave-requests">
+    <button type="button">İzin Taleplerim</button>
+</a>
+
+
 <form th:action="@{/logout}" method="post">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <button type="submit">Çıkış Yap</button>

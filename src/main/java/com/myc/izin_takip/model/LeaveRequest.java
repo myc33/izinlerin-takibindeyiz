@@ -2,10 +2,11 @@ package com.myc.izin_takip.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class LeaveRequest {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -13,11 +14,13 @@ public class LeaveRequest {
     @ManyToOne
     private Employee employee;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private double daysRequested;  // Kaç gün izin talep edildi
-    private String status; // Örn: PENDING, APPROVED, REJECTED
-    private String leaveType;  // İzin tipi
+    private LocalDateTime startDate;  // Saatli tarih
+    private LocalDateTime endDate;
+
+    private double daysRequested;  // Kullanıcı girecek
+
+    private String status;
+    private String leaveType;
 
 
     // Getter ve Setterlar
@@ -30,16 +33,13 @@ public class LeaveRequest {
 
     public void setEmployee(Employee employee) { this.employee = employee; }
 
-    public LocalDate getStartDate() { return startDate; }
+    public LocalDateTime getStartDate() { return startDate; }
+    public void setStartDate(LocalDateTime startDate) { this.startDate = startDate; }
 
-    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
-
-    public LocalDate getEndDate() { return endDate; }
-
-    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+    public LocalDateTime getEndDate() { return endDate; }
+    public void setEndDate(LocalDateTime endDate) { this.endDate = endDate; }
 
     public double getDaysRequested() { return daysRequested; }
-
     public void setDaysRequested(double daysRequested) { this.daysRequested = daysRequested; }
 
     public String getStatus() { return status; }
