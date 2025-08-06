@@ -24,17 +24,21 @@ public class AdminController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/add-employee")
-    public String showAddEmployeeForm() {
-        return "add-employee";
-    }
 
+    @GetMapping("/add-employee")
+    public String showAddEmployeeForm(Model model) {
+        List<Employee> managers = employeeRepository.findAll();
+        model.addAttribute("managers", managers);
+        return "add-employee"; // formun view ismi
+    }
     @PostMapping("/add-employee")
     public String addEmployee(@RequestParam String ad,
                               @RequestParam String soyad,
                               @RequestParam String baslamaTarihi,
                               @RequestParam String telefon,
-                              @RequestParam String password) {
+                              @RequestParam String password,
+                              @RequestParam String unvan,
+                              @RequestParam(required = false)  Long managerId) {
 
         Employee employee = new Employee();
         employee.setAd(ad);
@@ -46,7 +50,14 @@ public class AdminController {
         if (employee.getRole() == null) {
             employee.setRole("EMPLOYEE");
         }
-
+        employee.setUnvan(unvan);
+        if (managerId != null) {
+            Employee manager = employeeRepository.findById(managerId).orElse(null);
+            employee.setManager(manager);
+        } else {
+            employee.setManager(null);
+        }
+        employee.setRemainingLeave(employee.hesaplaKalanIzin());
         employeeRepository.save(employee);
 
         return "redirect:/admin/employees";

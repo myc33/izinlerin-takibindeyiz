@@ -13,9 +13,11 @@
              <th>ID</th>
              <th>Ad</th>
              <th>Soyad</th>
-             <th>Başlama Tarihi</th>
+             <th>İşe Başlama Tarihi</th>
              <th>Telefon</th>
-         </tr>
+             <th>Ünvan</th>
+             <th>Kalan İzin</th>
+             <th>Yönetici</th>
      </thead>
      <tbody>
          <tr th:each="employee : ${employees}">
@@ -24,6 +26,9 @@
              <td th:text="${employee.soyad}"></td>
              <td th:text="${employee.baslamaTarihi}"></td>
              <td th:text="${employee.telefon != null ? employee.telefon : '-'}"></td>
+             <td th:text="${employee.unvan}"></td>
+             <td th:text="${employee.remainingLeave}">0</td>
+             <td th:text="${employee.manager != null ? employee.manager.ad + ' ' + employee.manager.soyad : '-'}"></td>
          </tr>
      </tbody>
  </table>

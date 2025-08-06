@@ -7,7 +7,7 @@
 <body>
 <h1>Yeni Çalışan Ekle</h1>
 
-<form th:action="@{/admin/add-employee}" method="post">
+<form th:action="@{/admin/add-employee}" method="post" autocomplete="off">
     <label>Ad:</label>
     <input type="text" name="ad" required/><br/><br/>
 
@@ -19,6 +19,18 @@
 
     <label>Cep Telefonu:</label>
     <input type="text" name="telefon" required/><br/><br/>
+
+    <label for="unvan">Unvan:</label>
+    <input type="text" id="unvan" name="unvan" required /><br/><br/>
+
+    <label for="manager">Yönetici:</label>
+    <select id="manager" name="managerId">
+        <option value="">-- Yönetici Seçin (Opsiyonel) --</option>
+        <option th:each="mgr : ${managers}"
+                th:value="${mgr.id}"
+                th:text="${mgr.ad + ' ' + mgr.soyad}">
+        </option>
+    </select>
 
     <label>Şifre:</label>
     <input type="password" name="password" required/><br/><br/>

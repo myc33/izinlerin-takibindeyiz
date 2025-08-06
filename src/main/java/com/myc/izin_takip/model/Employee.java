@@ -2,6 +2,7 @@ package com.myc.izin_takip.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 public class Employee {
@@ -17,6 +18,12 @@ public class Employee {
     private String password;
     private String role;
     private String username;
+    private int remainingLeave;
+    private String unvan;
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)  // optional = true ile nullable yapıyoruz
+    @JoinColumn(name = "manager_id", nullable = true)
+    private Employee manager;
+
 
     // --- Getter & Setter'lar ---
 
@@ -51,4 +58,38 @@ public class Employee {
     public String getUsername() { return username; }
 
     public void setUsername(String username) { this.username = username; }
+
+    public Integer getRemainingLeave() {
+        return remainingLeave;
+    }
+
+    public void setRemainingLeave(Integer remainingLeave) {
+        this.remainingLeave = remainingLeave;
+    }
+
+    public String getUnvan() {
+        return unvan;
+    }
+
+    public void setUnvan(String unvan) {
+        this.unvan = unvan;
+    }
+
+    public Employee getManager() {
+        return manager;
+    }
+
+    public void setManager(Employee manager) {
+        this.manager = manager;
+    }
+
+    public int hesaplaKalanIzin() {
+        LocalDate simdi = LocalDate.now();
+        if (baslamaTarihi != null && baslamaTarihi.isBefore(simdi)) {
+            int yillar = Period.between(baslamaTarihi, simdi).getYears();
+            return yillar * 14;
+        }
+        return 0;
+    }
+
 }
